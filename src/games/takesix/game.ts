@@ -105,6 +105,13 @@ export function selectDeck(G: IG, ctx: IGameCtx, id: number): any {
   // Append card
   return {
     ...G,
+    players: Object.values({
+      ...G.players,
+      [ctx.playerID]: {
+        ...G.players[ctx.playerID as any],
+        selectedCard: null,
+      },
+    }),
     decks: Object.values({
       ...G.decks,
       [id]: [...G.decks[id], card],
