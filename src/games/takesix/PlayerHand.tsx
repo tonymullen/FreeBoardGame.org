@@ -20,7 +20,7 @@ export class PlayerHand extends React.Component<IPlayerHandProps, IPlayerHandSta
   render() {
     const selectedCard = this.props.G.players[this.props.playerID as any].selectedCard;
     console.log(this.props.G.players[this.props.playerID as any]);
-    let selectedCardComp: any;
+    let selectedCardComp: React.ReactChild;
     if (selectedCard) {
       selectedCardComp = <CardComponent key={selectedCard.number} card={selectedCard} />;
     }
@@ -37,20 +37,14 @@ export class PlayerHand extends React.Component<IPlayerHandProps, IPlayerHandSta
           }}
         >
           {selectedCardComp}
-          {this.props.G.players[this.props.playerID as any].cards.map((card, index: number) => {
-            if (selectedCardComp) {
-              return (
-                <CardComponent
-                  key={card.number}
-                  click={this._selectCard(index)}
-                  card={card}
-                  opaque={true}
-                  bounceIn={false}
-                />
-              );
-            }
-            return <CardComponent key={card.number} click={this._selectCard(index)} card={card} />;
-          })}
+          {this.props.G.players[this.props.playerID as any].cards.map((card, index: number) => (
+            <CardComponent
+              key={card.number}
+              click={this._selectCard(index)}
+              card={card}
+              opaque={typeof selectedCardComp === 'undefined'}
+            />
+          ))}
         </div>
       </div>
     );
