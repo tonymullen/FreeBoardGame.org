@@ -42,7 +42,7 @@ export class PlayerHand extends React.Component<IPlayerHandProps, IPlayerHandSta
               key={card.number}
               click={this._selectCard(index)}
               card={card}
-              opaque={typeof selectedCardComp === 'undefined'}
+              opaque={typeof selectedCardComp !== 'undefined'}
             />
           ))}
         </div>
