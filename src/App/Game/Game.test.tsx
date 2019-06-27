@@ -91,7 +91,7 @@ describe('Game', () => {
     expect(wrapper.html()).to.contain('Fail');
   });
 
-  it('should render error correctly with unknown gameCode', async () => {
+  it('should render error correctly with invalid gameCode', async () => {
     const app = (
       <MemoryRouter>
         <Game match={{ params: { gameCode: 'notagame', mode: 'local' } }} />
