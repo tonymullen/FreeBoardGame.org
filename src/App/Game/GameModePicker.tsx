@@ -175,7 +175,7 @@ export class GameModePicker extends React.Component<IGameModePickerProps, IGameM
   _getExtraInfoSlider(info: IGameModeInfo, slider: IGameModeExtraInfoSlider) {
     const value = this._getExtraInfoValue(info);
     return (
-      <div style={{ marginBottom: '18px', width: '80%' }}>
+      <div style={{ marginBottom: '18px', paddingLeft: '16px', paddingRight: '16px', width: '80%' }}>
         <Typography id="label" style={{ marginBottom: '8px' }}>
           Difficulty {value}/{slider.max}
         </Typography>
