@@ -165,7 +165,12 @@ export default class Game extends React.Component<IGameProps, IGameState> {
       case GameMode.AI:
         return [{ playerID: 0, name: 'You', roomID: '' }, { playerID: 1, name: 'Computer', roomID: '' }];
       case GameMode.LocalFriend:
-        return [{ playerID: 0, name: 'Player 1', roomID: '' }, { playerID: 1, name: 'Player 2', roomID: '' }];
+        return [
+          { playerID: 0, name: 'Player 1', roomID: '' },
+          { playerID: 2, name: 'Player 2', roomID: '' },
+          { playerID: 3, name: 'Player 3', roomID: '' },
+          { playerID: 4, name: 'Player 4', roomID: '' },
+        ];
     }
   }
 }

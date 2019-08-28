@@ -7,8 +7,8 @@ export const matrioGameDef: IGameDef = {
   code: 'matrio',
   name: 'MatriO',
   imageURL: MatrioThumbnail,
-  minPlayers: 2,
-  maxPlayers: 2,
+  minPlayers: 4,
+  maxPlayers: 4,
   modes: [{ mode: GameMode.OnlineFriend }, { mode: GameMode.LocalFriend }],
   description: 'Mathy card game',
   descriptionTag: `A card and board game based on \
