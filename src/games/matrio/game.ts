@@ -5,6 +5,11 @@ import { DealerService } from './services/DealerService';
 
 export interface IG {
   count: number;
+  dots: Dot[][];
+  leftMatrix: Card[][];
+  topMatrix: Card[][];
+  playerCards: Card[][];
+  prodMatrix: number[];
 }
 
 const dealer: DealerService = new DealerService();
