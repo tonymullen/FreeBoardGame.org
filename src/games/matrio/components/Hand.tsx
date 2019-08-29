@@ -19,13 +19,13 @@ export class Hand extends React.Component<IHandProps, {}> {
   }
 
   render() {
-    const cellStyle = {
-      border: '1px solid #555',
-      width: '70px',
-      height: '100px',
-      lineHeight: '50px',
-      textAlign: 'center',
-    };
+    // const cellStyle = {
+    //   border: '1px solid #555',
+    //   width: '70px',
+    //   height: '100px',
+    //   lineHeight: '50px',
+    //   textAlign: 'center',
+    // };
 
     const tdStyle = {
       width: '50px',

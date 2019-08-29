@@ -1,5 +1,4 @@
 import React from 'react';
-import { IBoardProps } from '../properties';
 import { IG } from '../game';
 import { Card } from '../shared/Card';
 

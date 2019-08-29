@@ -22,7 +22,7 @@ class MatrixB extends React.Component<IBoardProps, {}> {
     };
 
     let tbody = [];
-    let suits = ['spade', 'diamond', 'club', 'heart'];
+    // let suits = ['spade', 'diamond', 'club', 'heart'];
     for (let i = 0; i < 4; i++) {
       let cells = [];
       for (let j = 0; j < 3; j++) {

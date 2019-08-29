@@ -1,6 +1,6 @@
 import React from 'react';
 import { DotComponent } from './DotComponent';
-import { IG } from '../game';
+// import { IG } from '../game';
 import { IBoardProps } from '../properties';
 
 class MatrixProd extends React.Component<IBoardProps, {}> {
@@ -21,7 +21,7 @@ class MatrixProd extends React.Component<IBoardProps, {}> {
     for (let i = 0; i < 3; i++) {
       let cells = [];
       for (let j = 0; j < 3; j++) {
-        const id = 3 * i + j;
+        // const id = 3 * i + j;
         cells.push(
           <td key={j}>
             <div style={cellStyle}>
