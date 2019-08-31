@@ -22,17 +22,6 @@ export class MBoard extends React.Component<IBoardProps, {}> {
     };
 
     return (
-      //   <div>
-      //     <div style={headerStyle}></div>
-      //     <MatrixBoard
-      //       G={this.props.G}
-      //       ctx={this.props.ctx}
-      //       moves={this.props.moves}
-      //       playerID={this.props.playerID}
-      //       cards={this.props.cards}
-      //     ></MatrixBoard>
-      //   </div>
-
       <div>
         <div style={headerStyle}></div>
         <table style={tableStyle}>
@@ -42,8 +31,11 @@ export class MBoard extends React.Component<IBoardProps, {}> {
               <td style={cellStyle}>
                 <Hand
                   G={this.props.G}
+                  ctx={this.props.ctx}
                   cards={this.props.G.playerCards[2]}
                   playerID={2}
+                  moves={this.props.moves}
+                  step={this.props.step}
                   isActive={false}
                   // sth
                 />
@@ -65,8 +57,11 @@ export class MBoard extends React.Component<IBoardProps, {}> {
                   >
                     <Hand
                       G={this.props.G}
+                      ctx={this.props.ctx}
                       cards={this.props.G.playerCards[1]}
                       playerID={1}
+                      moves={this.props.moves}
+                      step={this.props.step}
                       isActive={false}
                       //
                     />
@@ -78,6 +73,7 @@ export class MBoard extends React.Component<IBoardProps, {}> {
                   G={this.props.G}
                   ctx={this.props.ctx}
                   moves={this.props.moves}
+                  step={this.props.step}
                   playerID={this.props.playerID}
                   cards={this.props.cards}
                   // step={this.props.step}
@@ -104,8 +100,11 @@ export class MBoard extends React.Component<IBoardProps, {}> {
                   >
                     <Hand
                       G={this.props.G}
+                      ctx={this.props.ctx}
                       cards={this.props.G.playerCards[3]}
                       playerID={3}
+                      moves={this.props.moves}
+                      step={this.props.step}
                       isActive={false}
                       //
                     />
@@ -117,8 +116,11 @@ export class MBoard extends React.Component<IBoardProps, {}> {
         </table>
         <Hand
           G={this.props.G}
+          ctx={this.props.ctx}
           cards={this.props.G.playerCards[0]}
           playerID={0}
+          moves={this.props.moves}
+          step={this.props.step}
           isActive={false}
           //
         />

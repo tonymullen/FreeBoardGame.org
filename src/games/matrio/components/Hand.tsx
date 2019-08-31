@@ -3,11 +3,15 @@ import { CardComponent } from './CardComponent';
 import { Card } from '../shared/Card';
 import { tableStyle } from '../styles/HandComponentStyles';
 import { IG } from '../game';
+import { IGameCtx } from '@freeboardgame.org/boardgame.io/core';
 
 interface IHandProps {
   G: IG;
+  ctx: IGameCtx;
   isActive: boolean;
   cards: Card[];
+  moves: any;
+  step: any;
   playerID: number;
 }
 
@@ -37,13 +41,15 @@ export class Hand extends React.Component<IHandProps, {}> {
 
     for (let i = 0; i < this.props.cards.length; i++) {
       this.props.cards[i].flip = cardFlip;
-      console.log('Cards:', i);
       tbody.push(
         <td style={tdStyle} key={i}>
           <CardComponent
             G={this.props.G}
+            ctx={this.props.ctx}
             size={cardSize}
             card={this.props.cards[i]}
+            moves={this.props.moves}
+            step={this.props.step}
             isActive={false}
             //   drag={this.props.drag}
           />

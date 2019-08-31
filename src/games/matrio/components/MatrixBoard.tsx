@@ -30,6 +30,7 @@ class MatrixBoard extends React.Component<IBoardProps, {}> {
                   G={this.props.G}
                   ctx={this.props.ctx}
                   moves={this.props.moves}
+                  step={this.props.step}
                   playerID={this.props.playerID}
                   cards={this.props.cards}
                   // G={this.props.G} placeCard={this.props.placeCard} dragging={this.props.dragging}
@@ -42,6 +43,7 @@ class MatrixBoard extends React.Component<IBoardProps, {}> {
                   G={this.props.G}
                   ctx={this.props.ctx}
                   moves={this.props.moves}
+                  step={this.props.step}
                   playerID={this.props.playerID}
                   cards={this.props.cards}
                   //   end={this.props.end}
@@ -57,6 +59,7 @@ class MatrixBoard extends React.Component<IBoardProps, {}> {
                   G={this.props.G}
                   ctx={this.props.ctx}
                   moves={this.props.moves}
+                  step={this.props.step}
                   playerID={this.props.playerID}
                   cards={this.props.cards}
                 />

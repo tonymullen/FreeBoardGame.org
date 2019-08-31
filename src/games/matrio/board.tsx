@@ -7,6 +7,23 @@ import { MBoard } from './components/MBoard';
 
 export class Board extends React.Component<IBoardProps, {}> {
   render() {
+    const bodyStyle = {
+      margin: 0,
+      padding: 0,
+      backgroundColor: 'green',
+    };
+
+    // const bodyStyle = {
+    //   margin: 0,
+    //   padding: 0,
+    //   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    //     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    //     sans-serif,
+    //   -webkit-font-smoothing: antialiased,
+    //   -moz-osx-font-smoothing: grayscale,
+    //   background-color: green,
+    // };
+
     if (this.props.ctx.gameover) {
       return (
         <GameLayout
@@ -32,6 +49,7 @@ export class Board extends React.Component<IBoardProps, {}> {
         G={props.G}
         ctx={props.ctx}
         moves={props.moves}
+        step={props.step}
         playerID={props.playerID}
         cards={props.cards}
         //
