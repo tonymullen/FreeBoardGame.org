@@ -7,12 +7,6 @@ import { MBoard } from './components/MBoard';
 
 export class Board extends React.Component<IBoardProps, {}> {
   render() {
-    const bodyStyle = {
-      margin: 0,
-      padding: 0,
-      backgroundColor: 'green',
-    };
-
     // const bodyStyle = {
     //   margin: 0,
     //   padding: 0,

@@ -23,16 +23,18 @@ export class CardComponent extends React.Component<ICardProps, {}> {
   onDragStart = (ev: any, card: Card) => {
     // this.props.drag(card);
     ev.dataTransfer.setData('text/plain', card.name);
-    localStorage.setItem('cardname', card.name);
+    // localStorage.setItem('cardname', card.name);
   };
 
   onDragEnd = (ev: any) => {
     console.log('Drag end');
+    const cardname = ev.dataTransfer.getData('text/plain');
     //console.log(this.props.moves);
     // placeCard(cardname: string, row: number, col: number, matrix: 'leftMatrix' | 'topMatrix') {
-    this.props.moves.placeCard(localStorage.getItem('cardname'), 7, 11, 'leftMatrix');
+    // this.props.moves.placeCard(localStorage.getItem('cardname'), 7, 11, 'leftMatrix');
+    this.props.moves.placeCard(cardname, 7, 11, 'leftMatrix');
     this.props.step();
-    localStorage.setItem('cardname', null);
+    //localStorage.setItem('cardname', null);
   };
 
   render() {

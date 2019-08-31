@@ -2,7 +2,7 @@ import { Game, IGameCtx } from '@freeboardgame.org/boardgame.io/core';
 import { Card } from './shared/Card';
 import { Dot } from './shared/Dot';
 import { DealerService } from './services/DealerService';
-import { c } from 'ttag/types';
+// import { c } from 'ttag/types';
 
 export interface IG {
   count: number;
