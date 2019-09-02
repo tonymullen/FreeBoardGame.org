@@ -1,17 +1,8 @@
 import React from 'react';
-import { IG } from '../game';
+// import { IG } from '../game';
 import { Card } from '../shared/Card';
-import { IGameCtx } from '@freeboardgame.org/boardgame.io/core';
-
-interface ICardProps {
-  G: IG;
-  ctx: IGameCtx;
-  isActive: boolean;
-  card: Card;
-  size: string;
-  moves: any;
-  step: any;
-}
+// import { IGameCtx } from '@freeboardgame.org/boardgame.io/core';
+import { ICardProps } from '../properties';
 
 export class CardComponent extends React.Component<ICardProps, {}> {
   //   isActive(id: number) {
@@ -20,19 +11,21 @@ export class CardComponent extends React.Component<ICardProps, {}> {
   //     return true;
   //   }
 
-  onDragStart = (ev: any, card: Card) => {
+  onDragStart = (card: Card) => {
+    console.log('dragging', card.name);
     // this.props.drag(card);
-    ev.dataTransfer.setData('text/plain', card.name);
+    // ev.dataTransfer.setData('text/plain', card.name);
     // localStorage.setItem('cardname', card.name);
   };
 
-  onDragEnd = (ev: any) => {
-    console.log('Drag end');
-    const cardname = ev.dataTransfer.getData('text/plain');
+  onDragEnd = () => {
+    console.log('end drag');
+    //const cardname = ev.dataTransfer.getData('text/plain');
     //console.log(this.props.moves);
     // placeCard(cardname: string, row: number, col: number, matrix: 'leftMatrix' | 'topMatrix') {
     // this.props.moves.placeCard(localStorage.getItem('cardname'), 7, 11, 'leftMatrix');
-    this.props.moves.placeCard(cardname, 7, 11, 'leftMatrix');
+    this.props.moves.placeCard(this.props.card.name, 7, 11, 'leftMatrix');
+    this.props.events.endTurn();
     this.props.step();
     //localStorage.setItem('cardname', null);
   };
@@ -41,8 +34,8 @@ export class CardComponent extends React.Component<ICardProps, {}> {
     return (
       <div
         key={this.props.card.name}
-        onDragStart={e => this.onDragStart(e, this.props.card)}
-        onDragEnd={e => this.onDragEnd(e)}
+        onDragStart={() => this.onDragStart(this.props.card)}
+        onDragEnd={() => this.onDragEnd()}
         // draggable
         // className="draggable"
       >

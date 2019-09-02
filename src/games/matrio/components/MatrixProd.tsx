@@ -31,6 +31,7 @@ class MatrixProd extends React.Component<IBoardProps, {}> {
                 ctx={this.props.ctx}
                 moves={this.props.moves}
                 step={this.props.step}
+                events={this.props.events}
                 playerID={this.props.playerID}
                 cards={this.props.cards}
               />

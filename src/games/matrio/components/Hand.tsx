@@ -1,19 +1,7 @@
 import React from 'react';
 import { CardComponent } from './CardComponent';
-import { Card } from '../shared/Card';
 import { tableStyle } from '../styles/HandComponentStyles';
-import { IG } from '../game';
-import { IGameCtx } from '@freeboardgame.org/boardgame.io/core';
-
-interface IHandProps {
-  G: IG;
-  ctx: IGameCtx;
-  isActive: boolean;
-  cards: Card[];
-  moves: any;
-  step: any;
-  playerID: number;
-}
+import { IHandProps } from '../properties';
 
 export class Hand extends React.Component<IHandProps, {}> {
   isActive(id: number) {
@@ -49,6 +37,7 @@ export class Hand extends React.Component<IHandProps, {}> {
             size={cardSize}
             card={this.props.cards[i]}
             moves={this.props.moves}
+            events={this.props.events}
             step={this.props.step}
             isActive={false}
             //   drag={this.props.drag}

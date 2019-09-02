@@ -31,26 +31,48 @@ export const MatrioGame = Game({
   moves: {
     placeCard(G: IG, ctx: IGameCtx, cardname: string, row: number, col: number, matrix: 'leftMatrix' | 'topMatrix') {
       const player = parseInt(ctx.playerID, 10);
-      G.playerCards[player] = G.playerCards[player].filter((i: Card) => {
+      const newPlayerCards = G.playerCards[player].filter((i: Card) => {
         return i.name !== cardname;
       });
-      console.log('cards after');
+      console.log(matrix);
 
-      console.log(G.playerCards[Number(ctx.currentPlayer)]);
-      console.log(G.count);
+      // console.log(newPlayerCards);
+      // //G[matrix][col][row] = name_card[cardname];
+      console.log('col row');
+      console.log(col, row);
+      // let newLeftMatrix, newTopMatrix;
 
-      G[matrix][col][row] = name_card[cardname];
+      // if (matrix === 'leftMatrix') {
+      //   newLeftMatrix = {
+      //     ...G.leftMatrix,
+      //   };
+      //   newTopMatrix = {
+      //     ...G.leftMatrix,
+      //   };
+      // } else {
+      //   newLeftMatrix = {
+      //     ...G.leftMatrix,
+      //   };
+      //   newTopMatrix = {
+      //     ...G.leftMatrix,
+      //   };
+      // }
 
       updateDots(G, ctx.currentPlayer);
+
       return {
-        playerCards: G.playerCards,
+        ...G,
+        playerCards: G.playerCards
+          .slice(0, player)
+          .concat([newPlayerCards])
+          .concat(G.playerCards.slice(player + 1, 4)),
         count: G.count + 1,
       };
     },
   },
   flow: {
     endGameIf: G => {
-      if (G.count === 10) {
+      if (G.count === 52) {
         return { winner: '1' };
       }
     },

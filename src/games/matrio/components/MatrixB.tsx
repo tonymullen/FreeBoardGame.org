@@ -12,6 +12,11 @@ class MatrixB extends React.Component<IBoardProps, {}> {
   //     this.props.placeCard(cardname, row, col, 'topMatrix');
   //   };
 
+  onDragOver = (ev: any) => {
+    ev.preventDefault();
+    console.log('Over Top Matrix');
+  };
+
   render() {
     const cellStyle = {
       border: '1px solid #555',
@@ -32,6 +37,7 @@ class MatrixB extends React.Component<IBoardProps, {}> {
             <div
               style={cellStyle}
               className="droppable"
+              // onDragOver={e => this.onDragOver(e)}
               //   onDragOver={e => this.onDragOver(e)}
               //   onDrop={
               //     this.props.G.canDropCard(this.props.G, this.props.G.topMatrix, j, i, this.props.dragging)
