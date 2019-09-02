@@ -12,10 +12,7 @@ export class CardComponent extends React.Component<ICardProps, {}> {
   //   }
 
   onDragStart = (ev: any, card: Card) => {
-    console.log('dragging', card.name);
-    // this.props.drag(card);
     ev.dataTransfer.setData('text/plain', card.name);
-    // localStorage.setItem('cardname', card.name);
   };
 
   onDragEnd = () => {
@@ -35,7 +32,7 @@ export class CardComponent extends React.Component<ICardProps, {}> {
       <div
         key={this.props.card.name}
         onDragStart={e => this.onDragStart(e, this.props.card)}
-        onDragEnd={() => this.onDragEnd()}
+        // onDragEnd={() => this.onDragEnd()}
         // draggable
         // className="draggable"
       >

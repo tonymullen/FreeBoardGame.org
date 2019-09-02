@@ -10,9 +10,10 @@ class MatrixB extends React.Component<IBoardProps, {}> {
     //this.props.next();
     //this.props.end();
   };
-  //   onDragOver = ev => {
-  //     ev.preventDefault();
-  //   };
+
+  onDragOver = (ev: any) => {
+    ev.preventDefault();
+  };
 
   //   onDrop = (ev, row, col) => {
   //     ev.preventDefault();
@@ -20,10 +21,10 @@ class MatrixB extends React.Component<IBoardProps, {}> {
   //     this.props.placeCard(cardname, row, col, 'topMatrix');
   //   };
 
-  onDragOver = (ev: any) => {
-    ev.preventDefault();
-    console.log('Over Top Matrix');
-  };
+  // onDragOver = (ev: any) => {
+  //   ev.preventDefault();
+  //   console.log('Over Top Matrix');
+  // };
 
   render() {
     const cellStyle = {

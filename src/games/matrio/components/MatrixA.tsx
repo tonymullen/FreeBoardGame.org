@@ -13,7 +13,7 @@ class MatrixA extends React.Component<IBoardProps, {}> {
 
   onDragOver = (ev: any) => {
     ev.preventDefault();
-    console.log('Over Left Matrix');
+    //console.log('Over Left Matrix');
   };
 
   render() {
