@@ -15,7 +15,8 @@ export class MBoard extends React.Component<IBoardProps, {}> {
     const tableStyle = {
       marginLeft: 'auto',
       marginRight: 'auto',
-      borderSpacing: '0',
+      borderSpacing: '10px',
+      backgroundColor: 'darkgreen',
     };
     const headerStyle = {
       height: '50px',
@@ -79,13 +80,6 @@ export class MBoard extends React.Component<IBoardProps, {}> {
                   step={this.props.step}
                   playerID={this.props.playerID}
                   cards={this.props.cards}
-                  // step={this.props.step}
-                  // images={this.props.ctx.images}
-                  // G = {this.props.G}
-                  // placeCard={this.props.moves.placeCard}
-                  // dragging = {this.state.dragging}
-                  // next={nextPlayerGo}
-                  // end={this.props.events.endTurn}
                 />
               </td>
               <td style={cellStyle}>
@@ -116,19 +110,23 @@ export class MBoard extends React.Component<IBoardProps, {}> {
                 </div>
               </td>
             </tr>
+            <tr>
+              <td colSpan={3}>
+                <Hand
+                  G={this.props.G}
+                  ctx={this.props.ctx}
+                  cards={this.props.G.playerCards[0]}
+                  playerID={0}
+                  moves={this.props.moves}
+                  events={this.props.events}
+                  step={this.props.step}
+                  isActive={false}
+                  //
+                />
+              </td>
+            </tr>
           </tbody>
         </table>
-        <Hand
-          G={this.props.G}
-          ctx={this.props.ctx}
-          cards={this.props.G.playerCards[0]}
-          playerID={0}
-          moves={this.props.moves}
-          events={this.props.events}
-          step={this.props.step}
-          isActive={false}
-          //
-        />
       </div>
     );
   }

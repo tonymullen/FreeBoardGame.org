@@ -13,12 +13,11 @@ class MatrixBoard extends React.Component<IBoardProps, {}> {
       marginLeft: 'auto',
       marginRight: 'auto',
       borderSpacing: '0',
-    };
-    const boardStyle = {
       backgroundColor: 'green',
     };
+
     return (
-      <div style={boardStyle}>
+      <div>
         <table style={tableStyle}>
           <tbody>
             <tr>
