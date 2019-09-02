@@ -26,6 +26,10 @@ export class Hand extends React.Component<IHandProps, {}> {
     let tbody = [];
     let cardSize = this.props.playerID === 0 ? '70px' : '45px';
     let cardFlip = this.props.playerID === 0 ? false : true;
+    let handDivStyle =
+      this.props.playerID === 0
+        ? { width: '960px', display: 'inline-flex' }
+        : { width: '620px', display: 'inline-flex' };
 
     for (let i = 0; i < this.props.cards.length; i++) {
       this.props.cards[i].flip = cardFlip;
@@ -47,7 +51,7 @@ export class Hand extends React.Component<IHandProps, {}> {
     }
 
     return (
-      <div>
+      <div style={handDivStyle}>
         <table style={tableStyle(this.props.playerID)}>
           <tbody>
             <tr>{tbody}</tr>
