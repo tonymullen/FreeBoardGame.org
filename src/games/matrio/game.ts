@@ -2,7 +2,6 @@ import { Game, IGameCtx } from '@freeboardgame.org/boardgame.io/core';
 import { Card } from './shared/Card';
 import { Dot } from './shared/Dot';
 import { DealerService } from './services/DealerService';
-// import { c } from 'ttag/types';
 
 export interface IG {
   count: number;
@@ -40,23 +39,33 @@ export const MatrioGame = Game({
       // //G[matrix][col][row] = name_card[cardname];
       console.log('col row');
       console.log(col, row);
-      // let newLeftMatrix, newTopMatrix;
+      console.log(cardname);
 
-      // if (matrix === 'leftMatrix') {
-      //   newLeftMatrix = {
-      //     ...G.leftMatrix,
-      //   };
-      //   newTopMatrix = {
-      //     ...G.leftMatrix,
-      //   };
-      // } else {
-      //   newLeftMatrix = {
-      //     ...G.leftMatrix,
-      //   };
-      //   newTopMatrix = {
-      //     ...G.leftMatrix,
-      //   };
-      // }
+      let newLeftMatrix = [...G.leftMatrix];
+      let newTopMatrix = [...G.topMatrix];
+      console.log(newLeftMatrix.length);
+
+      if (matrix === 'leftMatrix') {
+        newLeftMatrix = G.leftMatrix
+          .slice(0, col)
+          .concat([
+            G.leftMatrix[col]
+              .slice(0, row)
+              .concat([name_card[cardname]])
+              .concat(G.leftMatrix[col].slice(row + 1, 3)),
+          ])
+          .concat(G.leftMatrix.slice(col + 1, 4));
+      } else if (matrix === 'topMatrix') {
+        newTopMatrix = G.topMatrix
+          .slice(0, col)
+          .concat([
+            G.topMatrix[col]
+              .slice(0, row)
+              .concat([name_card[cardname]])
+              .concat(G.topMatrix[col].slice(row + 1, 3)),
+          ])
+          .concat(G.topMatrix.slice(col + 1, 4));
+      }
 
       updateDots(G, ctx.currentPlayer);
 
@@ -66,6 +75,8 @@ export const MatrioGame = Game({
           .slice(0, player)
           .concat([newPlayerCards])
           .concat(G.playerCards.slice(player + 1, 4)),
+        leftMatrix: newLeftMatrix,
+        topMatrix: newTopMatrix,
         count: G.count + 1,
       };
     },

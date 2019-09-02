@@ -2,18 +2,15 @@ import React from 'react';
 import { IBoardProps } from '../properties';
 
 class MatrixA extends React.Component<IBoardProps, {}> {
-  //   onDragOver = ev => {
-  //     ev.preventDefault();
-  //   };
+  onDrop = (ev: any, row: number, col: number) => {
+    ev.preventDefault();
+    const cardname = ev.dataTransfer.getData('text');
+    this.props.moves.placeCard(cardname, row, col, 'leftMatrix');
+    //console.log('Dropped on matrix', row, col, cardname);
+    //this.props.next();
+    //this.props.end();
+  };
 
-  //   onDrop = (ev, row, col) => {
-  //     ev.preventDefault();
-  //     this.cardname = ev.dataTransfer.getData('text');
-  //     this.props.placeCard(this.cardname, row, col, 'leftMatrix');
-  //     console.log('Dropped');
-  //     //this.props.next();
-  //     //this.props.end();
-  //   }
   onDragOver = (ev: any) => {
     ev.preventDefault();
     console.log('Over Left Matrix');
@@ -39,14 +36,14 @@ class MatrixA extends React.Component<IBoardProps, {}> {
             <div
               style={cellStyle}
               className="droppable"
-              // onDragOver={e => this.onDragOver(e)}
-              //   onDrop={
-              //    // this.props.G.canDropCard(this.props.G, this.props.G.leftMatrix, i, j, this.props.dragging)
-              //       ? e => {
-              //          // this.onDrop(e, i, j);
-              //         }
-              //       : null
-              //   }
+              onDragOver={e => this.onDragOver(e)}
+              onDrop={
+                //this.props.G.canDropCard(this.props.G, this.props.G.leftMatrix, i, j, this.props.dragging)
+                //? e => {
+                e => this.onDrop(e, i, j)
+                //</td>}
+                //: null
+              }
             >
               <img height="100%" src={String(this.props.G.leftMatrix[j][i].image)} alt="card"></img>
             </div>
