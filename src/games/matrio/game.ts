@@ -126,9 +126,6 @@ function updateDots(G: IG, player: string, newLeftMatrix: Card[][], newTopMatrix
   for (leftRow = 0; leftRow < 3; leftRow++) {
     let filledrows = true;
     for (leftColumn = 0; leftColumn < 4; leftColumn++) {
-      // console.log('left col', leftColumn);
-      // console.log('left row', leftRow);
-      // console.log(G.leftMatrix[leftColumn][leftRow].face);
       if (newLeftMatrix[leftColumn][leftRow].face === 'blank') {
         filledrows = false;
       }
@@ -138,6 +135,7 @@ function updateDots(G: IG, player: string, newLeftMatrix: Card[][], newTopMatrix
         let filledcolumns = true;
         for (topRow = 0; topRow < 4; topRow++) {
           if (newTopMatrix[topRow][topColumn].face === 'blank') {
+            // console.log('top row:', topRow, 'top column:', topColumn, 'blank');
             filledcolumns = false;
           }
         }
@@ -148,12 +146,12 @@ function updateDots(G: IG, player: string, newLeftMatrix: Card[][], newTopMatrix
             newDots = G.dots
               .slice(0, leftRow)
               .concat([
-                G.dots[topColumn]
-                  .slice(0, leftRow)
-                  .concat([new Dot(player, getDotProduct(G, leftRow, topColumn))])
-                  .concat(G.dots[topColumn].slice(leftRow + 1, 3)),
+                G.dots[leftRow]
+                  .slice(0, topColumn)
+                  .concat([new Dot(player, getDotProduct(G, leftRow, topColumn, newLeftMatrix, newTopMatrix))])
+                  .concat(G.dots[leftRow].slice(topColumn + 1, 3)),
               ])
-              .concat(G.dots.slice(topColumn + 1, 3));
+              .concat(G.dots.slice(leftRow + 1, 3));
           } else {
             // G.dots[leftRow][topColumn].score = getDotProduct(G, leftRow, topColumn);
           }
@@ -164,10 +162,11 @@ function updateDots(G: IG, player: string, newLeftMatrix: Card[][], newTopMatrix
   return newDots;
 }
 
-function getDotProduct(G: IG, leftRow: number, topColumn: number) {
+function getDotProduct(G: IG, leftRow: number, topColumn: number, newLeftMatrix: Card[][], newTopMatrix: Card[][]) {
   let dp = 0;
   for (let i = 0; i < 4; i++) {
-    dp += G.leftMatrix[i][leftRow].value * G.topMatrix[i][topColumn].value;
+    dp += newLeftMatrix[i][leftRow].value * newTopMatrix[i][topColumn].value;
   }
+  console.log('Dot product', dp);
   return dp;
 }

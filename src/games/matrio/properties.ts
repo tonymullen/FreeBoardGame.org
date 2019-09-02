@@ -2,6 +2,7 @@ import { IGameCtx } from '@freeboardgame.org/boardgame.io/core';
 import { IGameArgs } from '../../App/Game/GameBoardWrapper';
 import { IG } from './game';
 import { Card } from './shared/Card';
+import { Dot } from './shared/Dot';
 
 export interface IBoardProps {
   G: IG;
@@ -12,6 +13,18 @@ export interface IBoardProps {
   playerID: string;
   gameArgs?: IGameArgs;
   cards: Card[];
+}
+
+export interface IDotProps {
+  G: IG;
+  ctx: IGameCtx;
+  moves: any;
+  step: any;
+  events: any;
+  playerID: string;
+  gameArgs?: IGameArgs;
+  cards: Card[];
+  dot: Dot;
 }
 
 export interface ICardProps {

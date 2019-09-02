@@ -21,12 +21,12 @@ class MatrixProd extends React.Component<IBoardProps, {}> {
     for (let i = 0; i < 3; i++) {
       let cells = [];
       for (let j = 0; j < 3; j++) {
-        // const id = 3 * i + j;
+        const id = 3 * i + j;
         cells.push(
-          <td key={j}>
+          <td key={id}>
             <div style={cellStyle}>
               <DotComponent
-                //   dot={this.props.G.dots[i][j]}
+                dot={this.props.G.dots[i][j]}
                 G={this.props.G}
                 ctx={this.props.ctx}
                 moves={this.props.moves}

@@ -1,18 +1,19 @@
 import React from 'react';
 import { Dot } from '../shared/Dot';
-import { IBoardProps } from '../properties';
+import { IDotProps } from '../properties';
 
-export class DotComponent extends React.Component<IBoardProps, {}> {
+export class DotComponent extends React.Component<IDotProps, {}> {
   render() {
-    let dot: Dot = this.props.G.dots[0][0];
+    //let dot: Dot = this.props.G.dots[0][0];
     let color = '#bbb';
-    if (dot.player === 'Player 1') {
+    console.log('Player is', this.props.dot.player);
+    if (this.props.dot.player === '0') {
       color = 'blue';
-    } else if (dot.player === 'Player 2') {
+    } else if (this.props.dot.player === '1') {
       color = 'orange';
-    } else if (dot.player === 'Player 3') {
+    } else if (this.props.dot.player === '2') {
       color = 'yellow';
-    } else if (dot.player === 'Player 4') {
+    } else if (this.props.dot.player === '3') {
       color = 'purple';
     }
 
@@ -32,6 +33,7 @@ export class DotComponent extends React.Component<IBoardProps, {}> {
       boxSizing: 'border-box' as 'border-box',
       height: '80px',
       width: '80px',
+      color: 'black',
       backgroundColor: 'white',
       borderRadius: '50%',
       display: 'inline-flex',
@@ -50,13 +52,13 @@ export class DotComponent extends React.Component<IBoardProps, {}> {
       marginTop: '15%',
     };
 
-    if (dot.player === 'nobody') {
+    if (this.props.dot.player === 'nobody') {
       return <div></div>;
     } else {
       return (
         <div style={dotStyle}>
           <div style={innerStyle}>
-            <div style={textDivStyle}>{dot.score}</div>
+            <div style={textDivStyle}>{this.props.dot.score}</div>
           </div>
         </div>
       );
