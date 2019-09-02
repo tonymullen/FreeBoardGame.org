@@ -143,16 +143,30 @@ function updateDots(G: IG, player: string, newLeftMatrix: Card[][], newTopMatrix
           if (G.dots[leftRow][topColumn].player === 'nobody') {
             console.log('Add a dot');
             //G.dots[leftRow][topColumn] = new Dot(player, getDotProduct(G, leftRow, topColumn));
-            newDots = G.dots
+            newDots = newDots
+              .slice(0, leftRow)
+              .concat([
+                newDots[leftRow]
+                  .slice(0, topColumn)
+                  .concat([new Dot(player, getDotProduct(G, leftRow, topColumn, newLeftMatrix, newTopMatrix))])
+                  .concat(newDots[leftRow].slice(topColumn + 1, 3)),
+              ])
+              .concat(newDots.slice(leftRow + 1, 3));
+          } else {
+            newDots = newDots
               .slice(0, leftRow)
               .concat([
                 G.dots[leftRow]
                   .slice(0, topColumn)
-                  .concat([new Dot(player, getDotProduct(G, leftRow, topColumn, newLeftMatrix, newTopMatrix))])
-                  .concat(G.dots[leftRow].slice(topColumn + 1, 3)),
+                  .concat([
+                    new Dot(
+                      newDots[leftRow][topColumn].player,
+                      getDotProduct(G, leftRow, topColumn, newLeftMatrix, newTopMatrix),
+                    ),
+                  ])
+                  .concat(newDots[leftRow].slice(topColumn + 1, 3)),
               ])
-              .concat(G.dots.slice(leftRow + 1, 3));
-          } else {
+              .concat(newDots.slice(leftRow + 1, 3));
             // G.dots[leftRow][topColumn].score = getDotProduct(G, leftRow, topColumn);
           }
         }

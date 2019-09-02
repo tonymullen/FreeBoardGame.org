@@ -1,5 +1,4 @@
 import React from 'react';
-import { Dot } from '../shared/Dot';
 import { IDotProps } from '../properties';
 
 export class DotComponent extends React.Component<IDotProps, {}> {
@@ -8,13 +7,13 @@ export class DotComponent extends React.Component<IDotProps, {}> {
     let color = '#bbb';
     console.log('Player is', this.props.dot.player);
     if (this.props.dot.player === '0') {
-      color = 'blue';
-    } else if (this.props.dot.player === '1') {
-      color = 'orange';
-    } else if (this.props.dot.player === '2') {
-      color = 'yellow';
-    } else if (this.props.dot.player === '3') {
       color = 'purple';
+    } else if (this.props.dot.player === '1') {
+      color = 'yellow';
+    } else if (this.props.dot.player === '2') {
+      color = 'orange';
+    } else if (this.props.dot.player === '3') {
+      color = 'blue';
     }
 
     const dotStyle = {
