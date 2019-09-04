@@ -26,6 +26,7 @@ export class Hand extends React.Component<IHandProps, {}> {
     let tbody = [];
     let cardSize = this.props.playerID === 0 ? '70px' : '45px';
     let cardFlip = this.props.playerID === 0 ? false : true;
+
     let handDivStyle =
       this.props.playerID === 0
         ? { width: '960px', display: 'inline-flex' }

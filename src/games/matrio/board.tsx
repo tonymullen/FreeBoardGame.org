@@ -45,7 +45,6 @@ export class Board extends React.Component<IBoardProps, {}> {
         moves={props.moves}
         step={props.step}
         events={props.events}
-        playerID={props.playerID}
         cards={props.cards}
         //
       ></MBoard>

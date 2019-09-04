@@ -5,7 +5,7 @@ export class DotComponent extends React.Component<IDotProps, {}> {
   render() {
     //let dot: Dot = this.props.G.dots[0][0];
     let color = '#bbb';
-    console.log('Player is', this.props.dot.player);
+    //console.log('This Dot', this.props.dot);
     if (this.props.dot.player === '0') {
       color = 'purple';
     } else if (this.props.dot.player === '1') {

@@ -4,15 +4,16 @@ import { IBoardProps } from '../properties';
 class MatrixB extends React.Component<IBoardProps, {}> {
   onDrop = (ev: any, row: number, col: number) => {
     ev.preventDefault();
-    const cardname = ev.dataTransfer.getData('text');
-    this.props.moves.placeCard(cardname, row, col, 'topMatrix');
-    //console.log('Dropped on matrix', row, col, cardname);
-    //this.props.next();
-    //this.props.end();
+    let trayContents = this.props.G.topMatrix[col][row];
+    let cardname = ev.dataTransfer.getData('text');
+    if (this.props.G.name_card[cardname].suit == trayContents.suit || trayContents.face != 'blank') {
+      this.props.moves.placeCard(cardname, row, col, 'topMatrix');
+    }
   };
 
-  onDragOver = (ev: any) => {
+  onDragOver = (ev: any, id: any) => {
     ev.preventDefault();
+    console.log('Over top Matrix', id);
   };
 
   //   onDrop = (ev, row, col) => {
@@ -46,7 +47,7 @@ class MatrixB extends React.Component<IBoardProps, {}> {
             <div
               style={cellStyle}
               className="droppable"
-              onDragOver={e => this.onDragOver(e)}
+              onDragOver={e => this.onDragOver(e, id)}
               onDrop={
                 //this.props.G.canDropCard(this.props.G, this.props.G.leftMatrix, j, i, this.props.dragging)
                 //? e => {

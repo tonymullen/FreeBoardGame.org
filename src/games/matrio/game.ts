@@ -10,6 +10,7 @@ export interface IG {
   topMatrix: Card[][];
   playerCards: Card[][];
   prodMatrix: number[];
+  name_card: { [s: string]: Card };
 }
 
 const dealer: DealerService = new DealerService();
@@ -24,12 +25,15 @@ export const MatrioGame = Game({
       topMatrix: topMatrix,
       prodMatrix: Array(9).fill(null),
       playerCards: playerCards,
+      name_card: name_card,
       count: 0,
     };
   },
   moves: {
     placeCard(G: IG, ctx: IGameCtx, cardname: string, row: number, col: number, matrix: 'leftMatrix' | 'topMatrix') {
       const player = parseInt(ctx.playerID, 10);
+      const card = name_card[cardname];
+      card.flip = false;
       const newPlayerCards = G.playerCards[player].filter((i: Card) => {
         return i.name !== cardname;
       });
@@ -43,7 +47,7 @@ export const MatrioGame = Game({
           .concat([
             G.leftMatrix[col]
               .slice(0, row)
-              .concat([name_card[cardname]])
+              .concat([card])
               .concat(G.leftMatrix[col].slice(row + 1, 3)),
           ])
           .concat(G.leftMatrix.slice(col + 1, 4));
@@ -53,7 +57,7 @@ export const MatrioGame = Game({
           .concat([
             G.topMatrix[col]
               .slice(0, row)
-              .concat([name_card[cardname]])
+              .concat([card])
               .concat(G.topMatrix[col].slice(row + 1, 3)),
           ])
           .concat(G.topMatrix.slice(col + 1, 4));
@@ -117,7 +121,6 @@ const playerCards = [
 ];
 
 function updateDots(G: IG, player: string, newLeftMatrix: Card[][], newTopMatrix: Card[][]) {
-  console.log('Updating dots');
   let newDots = [...G.dots];
   let leftColumn = 0;
   let leftRow = 0;
@@ -131,18 +134,17 @@ function updateDots(G: IG, player: string, newLeftMatrix: Card[][], newTopMatrix
       }
     }
     if (filledrows) {
+      console.log('Filled left row', leftRow);
       for (topColumn = 0; topColumn < 3; topColumn++) {
         let filledcolumns = true;
         for (topRow = 0; topRow < 4; topRow++) {
           if (newTopMatrix[topRow][topColumn].face === 'blank') {
-            // console.log('top row:', topRow, 'top column:', topColumn, 'blank');
+            console.log('top row:', topRow, 'top column:', topColumn, 'blank');
             filledcolumns = false;
           }
         }
         if (filledcolumns) {
           if (G.dots[leftRow][topColumn].player === 'nobody') {
-            console.log('Add a dot');
-            //G.dots[leftRow][topColumn] = new Dot(player, getDotProduct(G, leftRow, topColumn));
             newDots = newDots
               .slice(0, leftRow)
               .concat([
@@ -156,7 +158,7 @@ function updateDots(G: IG, player: string, newLeftMatrix: Card[][], newTopMatrix
             newDots = newDots
               .slice(0, leftRow)
               .concat([
-                G.dots[leftRow]
+                newDots[leftRow]
                   .slice(0, topColumn)
                   .concat([
                     new Dot(
@@ -167,7 +169,6 @@ function updateDots(G: IG, player: string, newLeftMatrix: Card[][], newTopMatrix
                   .concat(newDots[leftRow].slice(topColumn + 1, 3)),
               ])
               .concat(newDots.slice(leftRow + 1, 3));
-            // G.dots[leftRow][topColumn].score = getDotProduct(G, leftRow, topColumn);
           }
         }
       }
@@ -181,6 +182,5 @@ function getDotProduct(G: IG, leftRow: number, topColumn: number, newLeftMatrix:
   for (let i = 0; i < 4; i++) {
     dp += newLeftMatrix[i][leftRow].value * newTopMatrix[i][topColumn].value;
   }
-  console.log('Dot product', dp);
   return dp;
 }

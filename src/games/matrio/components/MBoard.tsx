@@ -1,9 +1,23 @@
 import React from 'react';
 import { MatrixBoard } from './MatrixBoard';
-import { Hand } from './Hand';
 import { IBoardProps } from '../properties';
+import { Hand } from './Hand';
+//import { Card } from '../shared/Card';
 
 export class MBoard extends React.Component<IBoardProps, {}> {
+  constructor(props: any) {
+    super(props);
+    // this.state = {
+    //   selectedCard: null,
+    // };
+  }
+
+  // setSelectedCard(card: Card): void {
+  //   this.setState({
+  //     selectedCard: card,
+  //   });
+  // }
+
   render() {
     const cellStyle = {
       width: '50px',
@@ -78,7 +92,6 @@ export class MBoard extends React.Component<IBoardProps, {}> {
                   moves={this.props.moves}
                   events={this.props.events}
                   step={this.props.step}
-                  playerID={this.props.playerID}
                   cards={this.props.cards}
                 />
               </td>

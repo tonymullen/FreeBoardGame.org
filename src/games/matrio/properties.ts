@@ -10,7 +10,6 @@ export interface IBoardProps {
   moves: any;
   step: any;
   events: any;
-  playerID: string;
   gameArgs?: IGameArgs;
   cards: Card[];
 }
@@ -21,7 +20,6 @@ export interface IDotProps {
   moves: any;
   step: any;
   events: any;
-  playerID: string;
   gameArgs?: IGameArgs;
   cards: Card[];
   dot: Dot;

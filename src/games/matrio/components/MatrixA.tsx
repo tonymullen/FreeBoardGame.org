@@ -4,16 +4,19 @@ import { IBoardProps } from '../properties';
 class MatrixA extends React.Component<IBoardProps, {}> {
   onDrop = (ev: any, row: number, col: number) => {
     ev.preventDefault();
-    const cardname = ev.dataTransfer.getData('text');
-    this.props.moves.placeCard(cardname, row, col, 'leftMatrix');
-    //console.log('Dropped on matrix', row, col, cardname);
-    //this.props.next();
-    //this.props.end();
+    let trayContents = this.props.G.leftMatrix[col][row];
+    let cardname = ev.dataTransfer.getData('text');
+    if (this.props.G.name_card[cardname].suit == trayContents.suit || trayContents.face != 'blank') {
+      this.props.moves.placeCard(cardname, row, col, 'leftMatrix');
+    }
   };
 
-  onDragOver = (ev: any) => {
+  onDragOver = (ev: any, id: any, row: number, col: number) => {
     ev.preventDefault();
-    //console.log('Over Left Matrix');
+    console.log(id, row, col);
+    // if (this.props.G.name_card[cardname].suit == trayContents.suit || trayContents.face != 'blank') {
+    //   console.log(document.getElementById(id));
+    // }
   };
 
   render() {
@@ -30,13 +33,13 @@ class MatrixA extends React.Component<IBoardProps, {}> {
     for (let i = 0; i < 3; i++) {
       let cells = [];
       for (let j = 0; j < 4; j++) {
-        const id = 3 * i + j;
+        const id = 4 * i + j;
         cells.push(
           <td key={id}>
             <div
               style={cellStyle}
               className="droppable"
-              onDragOver={e => this.onDragOver(e)}
+              onDragOver={e => this.onDragOver(e, id, i, j)}
               onDrop={
                 //this.props.G.canDropCard(this.props.G, this.props.G.leftMatrix, i, j, this.props.dragging)
                 //? e => {
