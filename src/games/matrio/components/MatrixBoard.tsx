@@ -2,10 +2,10 @@ import React from 'react';
 import { MatrixA } from './MatrixA';
 import { MatrixB } from './MatrixB';
 import { MatrixProd } from './MatrixProd';
-import { IBoardProps } from '../properties';
+import { MatrixBoardProps } from '../properties';
 import logo from '../assets/logo-angle.png';
 
-class MatrixBoard extends React.Component<IBoardProps, {}> {
+class MatrixBoard extends React.Component<MatrixBoardProps, {}> {
   render() {
     // console.log(this.props);
     // console.log(this.props.G);
@@ -32,7 +32,9 @@ class MatrixBoard extends React.Component<IBoardProps, {}> {
                   events={this.props.events}
                   step={this.props.step}
                   cards={this.props.cards}
-                  // G={this.props.G} placeCard={this.props.placeCard} dragging={this.props.dragging}
+                  selectedCard={this.props.selectedCard}
+                  setDraggingFalse={this.props.setDraggingFalse}
+                  dragging={this.props.dragging}
                 />
               </td>
             </tr>
@@ -45,6 +47,9 @@ class MatrixBoard extends React.Component<IBoardProps, {}> {
                   events={this.props.events}
                   step={this.props.step}
                   cards={this.props.cards}
+                  selectedCard={this.props.selectedCard}
+                  setDraggingFalse={this.props.setDraggingFalse}
+                  dragging={this.props.dragging}
                 />
               </td>
               <td>

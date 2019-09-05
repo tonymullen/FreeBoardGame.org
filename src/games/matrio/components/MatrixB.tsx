@@ -1,7 +1,7 @@
 import React from 'react';
-import { IBoardProps } from '../properties';
+import { MatrixBoardProps } from '../properties';
 
-class MatrixB extends React.Component<IBoardProps, {}> {
+class MatrixB extends React.Component<MatrixBoardProps, {}> {
   onDrop = (ev: any, row: number, col: number) => {
     ev.preventDefault();
     let trayContents = this.props.G.topMatrix[col][row];

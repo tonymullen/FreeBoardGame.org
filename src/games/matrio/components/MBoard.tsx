@@ -2,21 +2,35 @@ import React from 'react';
 import { MatrixBoard } from './MatrixBoard';
 import { IBoardProps } from '../properties';
 import { Hand } from './Hand';
-//import { Card } from '../shared/Card';
+import { Card } from '../shared/Card';
 
-export class MBoard extends React.Component<IBoardProps, {}> {
+export class MBoard extends React.Component<IBoardProps, { selectedCard: Card | null; dragging: boolean }> {
   constructor(props: any) {
     super(props);
-    // this.state = {
-    //   selectedCard: null,
-    // };
+    this.state = {
+      selectedCard: null,
+      dragging: false,
+    };
   }
 
-  // setSelectedCard(card: Card): void {
-  //   this.setState({
-  //     selectedCard: card,
-  //   });
-  // }
+  setSelectedCard: (card: Card) => void = (card: Card) => {
+    console.log('Setting selected card to', card.name);
+    this.setState({
+      selectedCard: card,
+    });
+  };
+
+  setDraggingTrue: () => void = () => {
+    this.setState({
+      dragging: true,
+    });
+  };
+
+  setDraggingFalse: () => void = () => {
+    this.setState({
+      dragging: false,
+    });
+  };
 
   render() {
     const cellStyle = {
@@ -53,6 +67,9 @@ export class MBoard extends React.Component<IBoardProps, {}> {
                   events={this.props.events}
                   step={this.props.step}
                   isActive={false}
+                  setSelectedCard={this.setSelectedCard}
+                  setDraggingTrue={this.setDraggingTrue}
+                  setDraggingFalse={this.setDraggingFalse}
                   // sth
                 />
               </td>
@@ -80,6 +97,9 @@ export class MBoard extends React.Component<IBoardProps, {}> {
                       events={this.props.events}
                       step={this.props.step}
                       isActive={false}
+                      setSelectedCard={this.setSelectedCard}
+                      setDraggingTrue={this.setDraggingTrue}
+                      setDraggingFalse={this.setDraggingFalse}
                       //
                     />
                   </div>
@@ -93,6 +113,9 @@ export class MBoard extends React.Component<IBoardProps, {}> {
                   events={this.props.events}
                   step={this.props.step}
                   cards={this.props.cards}
+                  selectedCard={this.state.selectedCard}
+                  setDraggingFalse={this.setDraggingFalse}
+                  dragging={this.state.dragging}
                 />
               </td>
               <td style={cellStyle}>
@@ -117,6 +140,9 @@ export class MBoard extends React.Component<IBoardProps, {}> {
                       events={this.props.events}
                       step={this.props.step}
                       isActive={false}
+                      setSelectedCard={this.setSelectedCard}
+                      setDraggingTrue={this.setDraggingTrue}
+                      setDraggingFalse={this.setDraggingFalse}
                       //
                     />
                   </div>
@@ -134,7 +160,9 @@ export class MBoard extends React.Component<IBoardProps, {}> {
                   events={this.props.events}
                   step={this.props.step}
                   isActive={false}
-                  //
+                  setSelectedCard={this.setSelectedCard}
+                  setDraggingTrue={this.setDraggingTrue}
+                  setDraggingFalse={this.setDraggingFalse}
                 />
               </td>
             </tr>

@@ -1,7 +1,5 @@
-import * as React from 'react';
-// import { IGameArgs } from '../../App/Game/GameBoardWrapper';
+import React from 'react';
 import { GameLayout } from '../../App/Game/GameLayout';
-// import Typography from '@material-ui/core/Typography';
 import { IBoardProps } from './properties';
 import { MBoard } from './components/MBoard';
 
@@ -17,7 +15,6 @@ export class Board extends React.Component<IBoardProps, {}> {
     //   -moz-osx-font-smoothing: grayscale,
     //   background-color: green,
     // };
-
     if (this.props.ctx.gameover) {
       return (
         <GameLayout
@@ -31,7 +28,6 @@ export class Board extends React.Component<IBoardProps, {}> {
     // return (
     //   <GameLayout>
     //     <h2>Hello world!</h2>
-
     //     {/* <pre>{JSON.stringify(this.props.ctx, null, 2)}</pre>
     //     <pre>{JSON.stringify(this.props.gameArgs, null, 2)}</pre> */}
     //   </GameLayout>
@@ -46,18 +42,7 @@ export class Board extends React.Component<IBoardProps, {}> {
         step={props.step}
         events={props.events}
         cards={props.cards}
-        //
       ></MBoard>
-      // <div>
-      // <Typography variant="h5" style={{ textAlign: 'center', color: 'white', marginBottom: '16px' }}>
-      //   Stuff
-      // </Typography>
-      //   <pre>{JSON.stringify(this.props.ctx, null, 2)}</pre>
-      //   <pre>{JSON.stringify(this.props.gameArgs, null, 2)}</pre>
-      //   <svg width="100%" height="100%" viewBox="0 0 3 3">
-      //     Yo
-      //   </svg>
-      // </div>
     );
   }
   _getGameOver() {

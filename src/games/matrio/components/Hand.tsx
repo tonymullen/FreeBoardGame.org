@@ -45,7 +45,9 @@ export class Hand extends React.Component<IHandProps, {}> {
             events={this.props.events}
             step={this.props.step}
             isActive={false}
-            //   drag={this.props.drag}
+            setSelectedCard={this.props.setSelectedCard}
+            setDraggingFalse={this.props.setDraggingFalse}
+            setDraggingTrue={this.props.setDraggingTrue}
           />
         </td>,
       );

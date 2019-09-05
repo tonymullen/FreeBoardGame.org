@@ -1,22 +1,50 @@
 import React from 'react';
-import { IBoardProps } from '../properties';
+import { MatrixBoardProps } from '../properties';
+import { Card } from '../shared/Card';
 
-class MatrixA extends React.Component<IBoardProps, {}> {
+class MatrixA extends React.Component<
+  MatrixBoardProps,
+  {
+    highlightDroppable: number;
+  }
+> {
+  constructor(props: any) {
+    super(props);
+    this.state = {
+      highlightDroppable: -1,
+    };
+  }
+
   onDrop = (ev: any, row: number, col: number) => {
     ev.preventDefault();
     let trayContents = this.props.G.leftMatrix[col][row];
-    let cardname = ev.dataTransfer.getData('text');
+    let cardname = this.props.selectedCard.name;
     if (this.props.G.name_card[cardname].suit == trayContents.suit || trayContents.face != 'blank') {
       this.props.moves.placeCard(cardname, row, col, 'leftMatrix');
     }
+    this.setState({
+      highlightDroppable: -1,
+    });
   };
 
   onDragOver = (ev: any, id: any, row: number, col: number) => {
     ev.preventDefault();
-    console.log(id, row, col);
-    // if (this.props.G.name_card[cardname].suit == trayContents.suit || trayContents.face != 'blank') {
-    //   console.log(document.getElementById(id));
-    // }
+    let trayContents = this.props.G.leftMatrix[col][row];
+    //let cardname = this.props.selectedCard.name;
+    if (this._isDroppable(this.props.selectedCard, trayContents)) {
+      //this.props.G.name_card[cardname].suit === trayContents.suit || trayContents.face != 'blank')
+      this.setState({
+        highlightDroppable: id,
+      });
+    }
+  };
+
+  _isDroppable = (card: Card, tray: Card) => {
+    if (card.suit == tray.suit || tray.face != 'blank') {
+      return true;
+    } else {
+      return false;
+    }
   };
 
   render() {
@@ -26,6 +54,27 @@ class MatrixA extends React.Component<IBoardProps, {}> {
       height: '100px',
       lineHeight: '50px',
       textAlign: 'center' as 'center',
+      opacity: 1.0,
+    };
+
+    const draggingCellStyle = {
+      border: '1px solid #555',
+      width: '70px',
+      height: '100px',
+      lineHeight: '50px',
+      textAlign: 'center' as 'center',
+      opacity: 0.5,
+    };
+
+    const droppableCellStyle = {
+      border: '10px solid #ff0000',
+      width: '70px',
+      height: '100px',
+      lineHeight: '50px',
+      textAlign: 'center' as 'center',
+      boxSshadow: 'inset 0px 0px 0px 10px red',
+      boxSizing: 'border-box',
+      opacity: 1.0,
     };
 
     let tbody = [];
@@ -34,10 +83,19 @@ class MatrixA extends React.Component<IBoardProps, {}> {
       let cells = [];
       for (let j = 0; j < 4; j++) {
         const id = 4 * i + j;
+        let thisCellStyle = cellStyle;
+        console.log(this.state.highlightDroppable);
+        if (this.props.dragging) {
+          if (this.state.highlightDroppable === id) {
+            thisCellStyle = droppableCellStyle;
+          } else {
+            thisCellStyle = draggingCellStyle;
+          }
+        }
         cells.push(
           <td key={id}>
             <div
-              style={cellStyle}
+              style={thisCellStyle}
               className="droppable"
               onDragOver={e => this.onDragOver(e, id, i, j)}
               onDrop={

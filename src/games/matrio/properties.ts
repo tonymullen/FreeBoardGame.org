@@ -14,6 +14,19 @@ export interface IBoardProps {
   cards: Card[];
 }
 
+export interface MatrixBoardProps {
+  G: IG;
+  ctx: IGameCtx;
+  moves: any;
+  step: any;
+  events: any;
+  gameArgs?: IGameArgs;
+  cards: Card[];
+  selectedCard: Card;
+  dragging: boolean;
+  setDraggingFalse: () => void;
+}
+
 export interface IDotProps {
   G: IG;
   ctx: IGameCtx;
@@ -34,6 +47,9 @@ export interface ICardProps {
   moves: any;
   events: any;
   step: any;
+  setSelectedCard: (card: Card) => void;
+  setDraggingTrue: () => void;
+  setDraggingFalse: () => void;
 }
 
 export interface IHandProps {
@@ -45,4 +61,7 @@ export interface IHandProps {
   events: any;
   step: any;
   playerID: number;
+  setSelectedCard: (card: Card) => void;
+  setDraggingTrue: () => void;
+  setDraggingFalse: () => void;
 }
