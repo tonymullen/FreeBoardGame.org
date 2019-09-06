@@ -6,8 +6,6 @@ import logo from '../assets/logo-angle.png';
 
 class MatrixBoard extends React.Component<MatrixBoardProps, {}> {
   render() {
-    // console.log(this.props);
-    // console.log(this.props.G);
     const tableStyle = {
       marginLeft: 'auto',
       marginRight: 'auto',
@@ -24,17 +22,6 @@ class MatrixBoard extends React.Component<MatrixBoardProps, {}> {
                 <img src={logo} width="300px"></img>
               </td>
               <td>
-                {/* <MatrixB
-                  G={this.props.G}
-                  ctx={this.props.ctx}
-                  moves={this.props.moves}
-                  events={this.props.events}
-                  step={this.props.step}
-                  cards={this.props.cards}
-                  selectedCard={this.props.selectedCard}
-                  setDraggingFalse={this.props.setDraggingFalse}
-                  dragging={this.props.dragging}
-                /> */}
                 <Matrix
                   mat={this.props.G.topMatrix}
                   left_or_top={'topMatrix'}
