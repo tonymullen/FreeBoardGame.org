@@ -11,6 +11,7 @@ export interface IG {
   playerCards: Card[][];
   prodMatrix: number[];
   name_card: { [s: string]: Card };
+  emptyTrays: { [suit: string]: number };
 }
 
 const dealer: DealerService = new DealerService();
@@ -27,6 +28,7 @@ export const MatrioGame = Game({
       playerCards: playerCards,
       name_card: name_card,
       count: 0,
+      emptyTrays: emptyTrays,
     };
   },
   moves: {
@@ -40,8 +42,12 @@ export const MatrioGame = Game({
 
       let newLeftMatrix = [...G.leftMatrix];
       let newTopMatrix = [...G.topMatrix];
+      let newEmptyTrays = { ...G.emptyTrays };
 
       if (matrix === 'leftMatrix') {
+        if (G.leftMatrix[col][row].face === 'blank') {
+          newEmptyTrays[G.leftMatrix[col][row].suit] = G.emptyTrays[G.leftMatrix[col][row].suit] - 1;
+        }
         newLeftMatrix = G.leftMatrix
           .slice(0, col)
           .concat([
@@ -52,6 +58,9 @@ export const MatrioGame = Game({
           ])
           .concat(G.leftMatrix.slice(col + 1, 4));
       } else if (matrix === 'topMatrix') {
+        if (G.topMatrix[col][row].face === 'blank') {
+          newEmptyTrays[G.topMatrix[col][row].suit] = G.emptyTrays[G.topMatrix[col][row].suit] - 1;
+        }
         newTopMatrix = G.topMatrix
           .slice(0, col)
           .concat([
@@ -75,6 +84,7 @@ export const MatrioGame = Game({
         topMatrix: newTopMatrix,
         dots: newDots,
         count: G.count + 1,
+        emptyTrays: newEmptyTrays,
       };
     },
   },
@@ -107,6 +117,13 @@ const dots = [
   [new Dot('nobody', null), new Dot('nobody', null), new Dot('nobody', null)],
   [new Dot('nobody', null), new Dot('nobody', null), new Dot('nobody', null)],
 ];
+
+const emptyTrays: { [suit: string]: number } = {
+  heart: 6,
+  spade: 6,
+  club: 6,
+  diamond: 6,
+};
 
 const name_card: { [s: string]: Card } = {};
 dealer.deck.forEach(card => {

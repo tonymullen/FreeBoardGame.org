@@ -1,6 +1,6 @@
 import React from 'react';
 import { CardComponent } from './CardComponent';
-import { tableStyle } from '../styles/HandComponentStyles';
+import { tableStyle } from '../styles/PlayerColorStyles';
 import { IHandProps } from '../properties';
 
 export class Hand extends React.Component<IHandProps, {}> {

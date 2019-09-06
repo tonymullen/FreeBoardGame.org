@@ -27,6 +27,21 @@ export interface MatrixBoardProps {
   setDraggingFalse: () => void;
 }
 
+export interface MatrixProps {
+  G: IG;
+  ctx: IGameCtx;
+  moves: any;
+  step: any;
+  events: any;
+  gameArgs?: IGameArgs;
+  cards: Card[];
+  selectedCard: Card;
+  dragging: boolean;
+  setDraggingFalse: () => void;
+  mat: Card[][];
+  left_or_top: 'leftMatrix' | 'topMatrix';
+}
+
 export interface IDotProps {
   G: IG;
   ctx: IGameCtx;
