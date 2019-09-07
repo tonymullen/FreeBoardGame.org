@@ -15,3 +15,14 @@ export function playerCardStyle(player: number) {
     backgroundColor: colors[player],
   };
 }
+
+export function turnMarkerStyle(player: number) {
+  return {
+    borderRadius: '50%',
+    border: 'solid 2px white',
+    backgroundColor: colors[player],
+    width: '50px',
+    height: '50px',
+    margin: 'auto',
+  };
+}

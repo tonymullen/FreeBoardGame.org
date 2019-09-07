@@ -74,6 +74,12 @@ export const MatrioGame = Game({
 
       const newDots = updateDots(G, ctx.currentPlayer, newLeftMatrix, newTopMatrix);
 
+      let bustPlayers: number[] = [];
+      if (G.count >= 9) {
+        bustPlayers = checkForBusts(newDots);
+      }
+      console.log(bustPlayers);
+
       return {
         ...G,
         playerCards: G.playerCards
@@ -199,4 +205,24 @@ function getDotProduct(G: IG, leftRow: number, topColumn: number, newLeftMatrix:
     dp += newLeftMatrix[i][leftRow].value * newTopMatrix[i][topColumn].value;
   }
   return dp;
+}
+
+function checkForBusts(dots: Dot[][]): number[] {
+  let playerDotCounts = [0, 0, 0, 0];
+  dots.forEach(row => {
+    row.forEach(dot => {
+      if (dot.player === 'nobody') {
+        return [];
+      } else {
+        playerDotCounts[Number(dot.player)]++;
+      }
+    });
+  });
+  let busts = [];
+  for (let i = 0; i <= 3; i++) {
+    if (playerDotCounts[i] == 0) {
+      busts.push(i);
+    }
+  }
+  return busts;
 }

@@ -1,6 +1,7 @@
 import React from 'react';
 import { MatrixBoard } from './MatrixBoard';
 import { IBoardProps } from '../properties';
+import { turnMarkerStyle } from '../styles/PlayerColorStyles';
 import { Hand } from './Hand';
 import { Card } from '../shared/Card';
 
@@ -57,15 +58,7 @@ export class MBoard extends React.Component<IBoardProps, { selectedCard: Card | 
           <tbody>
             <tr>
               <td>
-                <div
-                  style={{
-                    backgroundColor: 'purple',
-                    width: '50px',
-                    height: '50px',
-                    margin: 'auto',
-                    
-                  }}
-                ></div>
+                <div style={turnMarkerStyle(Number(this.props.ctx.currentPlayer))}></div>
               </td>
               <td style={cellStyle}>
                 <Hand
