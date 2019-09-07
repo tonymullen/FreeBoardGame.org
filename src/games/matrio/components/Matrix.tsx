@@ -1,5 +1,6 @@
 import React from 'react';
 import { MatrixProps } from '../properties';
+import { playerCardStyle } from '../styles/PlayerColorStyles';
 import { Card } from '../shared/Card';
 
 class Matrix extends React.Component<
@@ -38,6 +39,15 @@ class Matrix extends React.Component<
     }
   };
 
+  onDragStart = (ev: any) => {
+    ev.preventDefault();
+  };
+
+  onDragLeave = () => {
+    this.setState({
+      highlightDroppable: -1,
+    });
+  };
   _isDroppable = (card: Card, tray: Card) => {
     const NO_EMPTIES = 0;
     if (card.face === 'joker') {
@@ -54,59 +64,90 @@ class Matrix extends React.Component<
   };
 
   render() {
-    const cellStyle = {
+    let cellStyle = {
       border: '1px solid #555',
       width: '70px',
       height: '100px',
       lineHeight: '50px',
       textAlign: 'center' as 'center',
+    };
+
+    if (this.props.left_or_top === 'topMatrix') {
+      cellStyle.width = '100px';
+      cellStyle.height = '70px';
+      cellStyle.lineHeight = '70px';
+    }
+
+    const selectableCellStyle = {
       opacity: 1.0,
     };
 
     const draggingCellStyle = {
-      border: '1px solid #555',
-      width: '70px',
-      height: '100px',
-      lineHeight: '50px',
-      textAlign: 'center' as 'center',
       opacity: 0.5,
     };
 
-    const droppableCellStyle = {
-      border: '10px solid #ff0000',
-      width: '70px',
-      height: '100px',
-      lineHeight: '50px',
-      textAlign: 'center' as 'center',
-      boxSshadow: 'inset 0px 0px 0px 10px red',
-      boxSizing: 'border-box',
-      opacity: 1.0,
-    };
+    const droppableCellStyle = playerCardStyle(Number(this.props.ctx.currentPlayer));
 
+    // left matrix case
+    let rows = 3;
+    let columns = 4;
+    if (this.props.left_or_top === 'topMatrix') {
+      rows = 4;
+      columns = 3;
+    }
     let tbody = [];
-    for (let i = 0; i < 3; i++) {
+    for (let i = 0; i < rows; i++) {
       let cells = [];
-      for (let j = 0; j < 4; j++) {
-        const id = 4 * i + j;
+      for (let j = 0; j < columns; j++) {
+        const id = columns * i + j;
         let thisCellStyle = cellStyle;
+        let r = j;
+        let c = i;
+        if (this.props.left_or_top === 'topMatrix') {
+          r = i;
+          c = j;
+        }
         if (this.props.dragging) {
           if (this.state.highlightDroppable === id) {
-            thisCellStyle = droppableCellStyle;
-          } else if (this.props.mat[j][i].suit === this.props.selectedCard.suit) {
-            thisCellStyle = cellStyle;
+            thisCellStyle = { ...cellStyle, ...droppableCellStyle };
+          } else if (this._isDroppable(this.props.selectedCard, this.props.mat[r][c])) {
+            thisCellStyle = { ...cellStyle, ...selectableCellStyle };
           } else {
-            thisCellStyle = draggingCellStyle;
+            thisCellStyle = { ...cellStyle, ...draggingCellStyle };
           }
         }
+
+        let cardImageElement = (
+          <img
+            height="100%"
+            src={String(this.props.mat[r][c].image)}
+            alt="card"
+            style={thisCellStyle}
+            //
+          ></img>
+        );
+        if (this.props.left_or_top === 'topMatrix') {
+          cardImageElement = (
+            <img
+              width="67%"
+              src={String(this.props.G.topMatrix[i][j].image)}
+              style={{ transform: `translateY(-15px)rotate(-90deg)` }}
+              alt="card"
+            ></img>
+          );
+        }
+
         cells.push(
           <td key={id}>
             <div
               style={thisCellStyle}
               className="droppable"
-              onDragOver={e => this.onDragOver(e, id, i, j)}
-              onDrop={e => this.onDrop(e, i, j)}
+              onDragOver={e => this.onDragOver(e, id, c, r)}
+              onDrop={e => this.onDrop(e, c, r)}
+              onDragLeave={() => this.onDragLeave()}
+              onDragStart={e => this.onDragStart(e)}
             >
-              <img height="100%" src={String(this.props.mat[j][i].image)} alt="card"></img>
+              {cardImageElement}
             </div>
           </td>,
         );

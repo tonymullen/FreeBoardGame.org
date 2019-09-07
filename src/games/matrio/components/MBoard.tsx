@@ -14,7 +14,6 @@ export class MBoard extends React.Component<IBoardProps, { selectedCard: Card | 
   }
 
   setSelectedCard: (card: Card) => void = (card: Card) => {
-    console.log('Setting selected card to', card.name);
     this.setState({
       selectedCard: card,
     });
@@ -33,12 +32,13 @@ export class MBoard extends React.Component<IBoardProps, { selectedCard: Card | 
   };
 
   render() {
-    const cellStyle = {
+    const cellStyle: React.CSSProperties = {
       width: '50px',
       height: '50px',
       paddingLeft: '10px',
       paddingRight: '10px',
       textAlign: 'center' as 'center',
+      userSelect: 'none',
     };
     const tableStyle = {
       marginLeft: 'auto',
@@ -56,7 +56,17 @@ export class MBoard extends React.Component<IBoardProps, { selectedCard: Card | 
         <table style={tableStyle}>
           <tbody>
             <tr>
-              <td></td>
+              <td>
+                <div
+                  style={{
+                    backgroundColor: 'purple',
+                    width: '50px',
+                    height: '50px',
+                    margin: 'auto',
+                    
+                  }}
+                ></div>
+              </td>
               <td style={cellStyle}>
                 <Hand
                   G={this.props.G}

@@ -151,7 +151,6 @@ function updateDots(G: IG, player: string, newLeftMatrix: Card[][], newTopMatrix
       }
     }
     if (filledrows) {
-      console.log('Filled left row', leftRow);
       for (topColumn = 0; topColumn < 3; topColumn++) {
         let filledcolumns = true;
         for (topRow = 0; topRow < 4; topRow++) {

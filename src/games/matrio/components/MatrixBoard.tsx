@@ -5,8 +5,13 @@ import { MatrixBoardProps } from '../properties';
 import logo from '../assets/logo-angle.png';
 
 class MatrixBoard extends React.Component<MatrixBoardProps, {}> {
+  onDragStart = (ev: any) => {
+    ev.preventDefault();
+  };
+
   render() {
-    const tableStyle = {
+    const tableStyle: React.CSSProperties = {
+      userSelect: 'none',
       marginLeft: 'auto',
       marginRight: 'auto',
       borderSpacing: '0',
@@ -19,7 +24,7 @@ class MatrixBoard extends React.Component<MatrixBoardProps, {}> {
           <tbody>
             <tr>
               <td>
-                <img src={logo} width="300px"></img>
+                <img onDragStart={e => this.onDragStart(e)} src={logo} width="300px"></img>
               </td>
               <td>
                 <Matrix

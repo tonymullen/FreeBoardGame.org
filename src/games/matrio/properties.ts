@@ -65,6 +65,7 @@ export interface ICardProps {
   setSelectedCard: (card: Card) => void;
   setDraggingTrue: () => void;
   setDraggingFalse: () => void;
+  playerID: number;
 }
 
 export interface IHandProps {

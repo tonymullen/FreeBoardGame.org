@@ -11,14 +11,6 @@ export class Hand extends React.Component<IHandProps, {}> {
   }
 
   render() {
-    // const cellStyle = {
-    //   border: '1px solid #555',
-    //   width: '70px',
-    //   height: '100px',
-    //   lineHeight: '50px',
-    //   textAlign: 'center',
-    // };
-
     const tdStyle = {
       width: '50px',
     };
@@ -48,6 +40,7 @@ export class Hand extends React.Component<IHandProps, {}> {
             setSelectedCard={this.props.setSelectedCard}
             setDraggingFalse={this.props.setDraggingFalse}
             setDraggingTrue={this.props.setDraggingTrue}
+            playerID={this.props.playerID}
           />
         </td>,
       );

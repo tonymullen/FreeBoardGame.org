@@ -9,3 +9,9 @@ export function tableStyle(player: number) {
     padding: '10px',
   };
 }
+
+export function playerCardStyle(player: number) {
+  return {
+    backgroundColor: colors[player],
+  };
+}
