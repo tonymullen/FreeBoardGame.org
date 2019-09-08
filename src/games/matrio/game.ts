@@ -12,6 +12,8 @@ export interface IG {
   prodMatrix: number[];
   name_card: { [s: string]: Card };
   emptyTrays: { [suit: string]: number };
+  playerScores: number[];
+  winnner: number;
 }
 
 const dealer: DealerService = new DealerService();
@@ -29,6 +31,8 @@ export const MatrioGame = Game({
       name_card: name_card,
       count: 0,
       emptyTrays: emptyTrays,
+      playerScores: playerScores,
+      winner: -1,
     };
   },
   moves: {
@@ -75,17 +79,27 @@ export const MatrioGame = Game({
       const newDots = updateDots(G, ctx.currentPlayer, newLeftMatrix, newTopMatrix);
 
       let bustPlayers: number[] = [];
-      if (G.count >= 9) {
+      if (G.count >= 24) {
         bustPlayers = checkForBusts(newDots);
       }
-      console.log(bustPlayers);
+
+      let bustPlayerCards = [...G.playerCards];
+      bustPlayers.forEach(p => {
+        bustPlayerCards[p] = [];
+        playerScores[p] = -Infinity;
+      });
+
+      let updatePlayerCards = bustPlayerCards
+        .slice(0, player)
+        .concat([newPlayerCards])
+        .concat(bustPlayerCards.slice(player + 1, 4));
+
+      let winner = checkForWinner(updatePlayerCards, newDots);
+      console.log(winner);
 
       return {
         ...G,
-        playerCards: G.playerCards
-          .slice(0, player)
-          .concat([newPlayerCards])
-          .concat(G.playerCards.slice(player + 1, 4)),
+        playerCards: updatePlayerCards,
         leftMatrix: newLeftMatrix,
         topMatrix: newTopMatrix,
         dots: newDots,
@@ -142,6 +156,14 @@ const playerCards = [
   dealer.deck.slice(26, 39),
   dealer.deck.slice(39, 52),
 ];
+
+const playerScores = [0, 0, 0, 0];
+
+function checkForWinner(playerCards: Card[][], dots: Dot[][]) {
+  console.log(playerCards);
+  console.log(dots);
+  return -1;
+}
 
 function updateDots(G: IG, player: string, newLeftMatrix: Card[][], newTopMatrix: Card[][]) {
   let newDots = [...G.dots];
@@ -209,10 +231,11 @@ function getDotProduct(G: IG, leftRow: number, topColumn: number, newLeftMatrix:
 
 function checkForBusts(dots: Dot[][]): number[] {
   let playerDotCounts = [0, 0, 0, 0];
+  let full = true;
   dots.forEach(row => {
     row.forEach(dot => {
       if (dot.player === 'nobody') {
-        return [];
+        full = false;
       } else {
         playerDotCounts[Number(dot.player)]++;
       }
@@ -224,5 +247,9 @@ function checkForBusts(dots: Dot[][]): number[] {
       busts.push(i);
     }
   }
-  return busts;
+  if (full) {
+    return busts;
+  } else {
+    return [];
+  }
 }
