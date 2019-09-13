@@ -20,7 +20,7 @@ class Matrix extends React.Component<
     ev.preventDefault();
     let trayContents = this.props.mat[col][row];
     let cardname = this.props.selectedCard.name;
-    if (this._isDroppable(this.props.selectedCard, trayContents)) {
+    if (this._isDroppable(this.props.selectedCard, trayContents, this.props.G.count)) {
       this.props.moves.placeCard(cardname, row, col, this.props.left_or_top);
     }
     this.setState({
@@ -32,7 +32,7 @@ class Matrix extends React.Component<
   onDragOver = (ev: any, id: any, row: number, col: number) => {
     ev.preventDefault();
     let trayContents = this.props.mat[col][row];
-    if (this._isDroppable(this.props.selectedCard, trayContents)) {
+    if (this._isDroppable(this.props.selectedCard, trayContents, this.props.G.count)) {
       this.setState({
         highlightDroppable: id,
       });
@@ -48,7 +48,10 @@ class Matrix extends React.Component<
       highlightDroppable: -1,
     });
   };
-  _isDroppable = (card: Card, tray: Card) => {
+  _isDroppable = (card: Card, tray: Card, count: number) => {
+    if (count < 1 && (card.face != '2' || card.suit != 'club')) {
+      return false;
+    }
     const NO_EMPTIES = 0;
     if (card.face === 'joker') {
       return true;
@@ -110,7 +113,7 @@ class Matrix extends React.Component<
         if (this.props.dragging) {
           if (this.state.highlightDroppable === id) {
             thisCellStyle = { ...cellStyle, ...droppableCellStyle };
-          } else if (this._isDroppable(this.props.selectedCard, this.props.mat[r][c])) {
+          } else if (this._isDroppable(this.props.selectedCard, this.props.mat[r][c], this.props.G.count)) {
             thisCellStyle = { ...cellStyle, ...selectableCellStyle };
           } else {
             thisCellStyle = { ...cellStyle, ...draggingCellStyle };

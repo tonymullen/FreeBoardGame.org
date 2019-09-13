@@ -37,7 +37,6 @@ export const MatrioGame = Game({
   },
   moves: {
     placeCard(G: IG, ctx: IGameCtx, cardname: string, row: number, col: number, matrix: 'leftMatrix' | 'topMatrix') {
-      console.log('place card');
       const player = parseInt(ctx.playerID, 10);
       const card = name_card[cardname];
       card.flip = false;
@@ -128,7 +127,6 @@ export const MatrioGame = Game({
       deal: {
         allowedMoves: [],
         onPhaseBegin: (G, ctx) => {
-          console.log('Dealing');
           const hands = [
             dealer.deck.slice(0, 13),
             dealer.deck.slice(13, 26),
@@ -141,24 +139,19 @@ export const MatrioGame = Game({
             playerCards: hands,
           };
         },
-        onPhaseEnd: () => {
-          console.log('Done dealing');
-        },
         next: 'play',
       },
       play: {
-        onPhaseBegin: (G, ctx) => {
-          let startPlayer = 0;
-          for (let i = 0; i < 4; i++) {
-            G.playerCards[i].forEach((c: Card) => {
-              if (c.face === '2' && c.suit === 'club') {
-                startPlayer = i;
-              }
-            });
-          }
-          console.log('Start player: ', startPlayer);
-          // This doesn't work
-          ctx.events.endTurn({ next: startPlayer });
+        turnOrder: {
+          playOrder: () => [0, 1, 2, 3],
+          first: G => getFirstPlayer(G),
+          next: (_, ctx) => (ctx.playOrderPos + 1) % ctx.numPlayers,
+          actionPlayers: {
+            value: () => [0, 1, 2, 3],
+            all: true,
+            once: false,
+            others: false,
+          },
         },
         allowedMoves: ['placeCard'],
       },
@@ -229,6 +222,19 @@ function checkForWinner(playerCards: Card[][], dots: Dot[][]) {
   console.log(playerCards);
   console.log(dots);
   return -1;
+}
+
+function getFirstPlayer(G: IG): number {
+  console.log('getting first player');
+  let startPlayer = -1;
+  for (let i = 0; i < 4; i++) {
+    G.playerCards[i].forEach((c: Card) => {
+      if (c.face === '2' && c.suit === 'club') {
+        startPlayer = i;
+      }
+    });
+  }
+  return startPlayer;
 }
 
 function updateDots(G: IG, player: string, newLeftMatrix: Card[][], newTopMatrix: Card[][]) {
