@@ -70,7 +70,7 @@ declare module '@freeboardgame.org/boardgame.io/core' {
     D20: () => number;
   }
   export class Events {
-    endTurn: () => void;
+    endTurn: (next?: any) => void;
     endPhase: () => void;
     endGame: (gameover?: any) => void;
   }

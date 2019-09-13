@@ -21,7 +21,7 @@ export class Hand extends React.Component<IHandProps, {}> {
 
     const bustStyle = {
       width: '200px',
-      color: 'white',
+      color: 'black',
       height: cardSize,
       fontSize: '3em',
     };
@@ -55,8 +55,10 @@ export class Hand extends React.Component<IHandProps, {}> {
       }
     } else {
       tbody.push(
-        <td style={bustStyle}>
-          <div>BUST</div>
+        <td style={bustStyle} key={-1}>
+          <div style={{ background: 'white' }} text-align="center">
+            BUST
+          </div>
         </td>,
       );
     }

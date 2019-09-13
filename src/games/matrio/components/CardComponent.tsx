@@ -25,7 +25,7 @@ export class CardComponent extends React.Component<ICardProps, {}> {
         onDragEnd={() => this.onDragEnd()}
         draggable={false}
       >
-        <img user-select={false} width={this.props.size} src={String(this.props.card.image)} />
+        <img user-select="none" width={this.props.size} src={String(this.props.card.image)} />
       </div>
     );
   }

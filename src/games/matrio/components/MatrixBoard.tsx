@@ -2,6 +2,7 @@ import React from 'react';
 import { Matrix } from './Matrix';
 import { MatrixProd } from './MatrixProd';
 import { MatrixBoardProps } from '../properties';
+import { turnMarkerStyle } from '../styles/PlayerColorStyles';
 import logo from '../assets/logo-angle.png';
 
 class MatrixBoard extends React.Component<MatrixBoardProps, {}> {
@@ -24,6 +25,7 @@ class MatrixBoard extends React.Component<MatrixBoardProps, {}> {
           <tbody>
             <tr>
               <td>
+                <div style={turnMarkerStyle(Number(this.props.ctx.currentPlayer))}></div>
                 <img onDragStart={e => this.onDragStart(e)} src={logo} width="300px"></img>
               </td>
               <td>

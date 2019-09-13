@@ -37,6 +37,7 @@ export const MatrioGame = Game({
   },
   moves: {
     placeCard(G: IG, ctx: IGameCtx, cardname: string, row: number, col: number, matrix: 'leftMatrix' | 'topMatrix') {
+      console.log('place card');
       const player = parseInt(ctx.playerID, 10);
       const card = name_card[cardname];
       card.flip = false;
@@ -96,7 +97,6 @@ export const MatrioGame = Game({
 
       let winner = checkForWinner(updatePlayerCards, newDots);
       console.log(winner);
-
       return {
         ...G,
         playerCards: updatePlayerCards,
@@ -107,8 +107,62 @@ export const MatrioGame = Game({
         emptyTrays: newEmptyTrays,
       };
     },
+
+    dealCard(G: IG, ctx: IGameCtx, player: number, card: Card) {
+      let newPlayerCards = [...G.playerCards[player]];
+      newPlayerCards.push(card);
+      let updatePlayerCards = G.playerCards
+        .slice(0, player)
+        .concat([newPlayerCards])
+        .concat(G.playerCards.slice(player + 1, 4));
+      return {
+        ...G,
+        playerCards: updatePlayerCards,
+      };
+    },
   },
   flow: {
+    startingPhase: 'deal',
+    endPhase: true,
+    phases: {
+      deal: {
+        allowedMoves: [],
+        onPhaseBegin: (G, ctx) => {
+          console.log('Dealing');
+          const hands = [
+            dealer.deck.slice(0, 13),
+            dealer.deck.slice(13, 26),
+            dealer.deck.slice(26, 39),
+            dealer.deck.slice(39, 52),
+          ];
+          ctx.events.endPhase();
+          return {
+            ...G,
+            playerCards: hands,
+          };
+        },
+        onPhaseEnd: () => {
+          console.log('Done dealing');
+        },
+        next: 'play',
+      },
+      play: {
+        onPhaseBegin: (G, ctx) => {
+          let startPlayer = 0;
+          for (let i = 0; i < 4; i++) {
+            G.playerCards[i].forEach((c: Card) => {
+              if (c.face === '2' && c.suit === 'club') {
+                startPlayer = i;
+              }
+            });
+          }
+          console.log('Start player: ', startPlayer);
+          // This doesn't work
+          ctx.events.endTurn({ next: startPlayer });
+        },
+        allowedMoves: ['placeCard'],
+      },
+    },
     endGameIf: G => {
       if (G.count === 52) {
         return { winner: '1' };
@@ -150,12 +204,24 @@ dealer.deck.forEach(card => {
   name_card[card.name] = card;
 });
 
-const playerCards = [
-  dealer.deck.slice(0, 13),
-  dealer.deck.slice(13, 26),
-  dealer.deck.slice(26, 39),
-  dealer.deck.slice(39, 52),
-];
+const playerCards: Card[][] = [[], [], [], []];
+
+// const playerCards = [
+//   aler.deck.slice(0, 13),
+//   dealer.deck.slice(13, 26),
+//   dealer.deck.slice(26, 39),
+//   dealer.deck.slice(39, 52),de
+// ];
+
+// function deal(dealer: DealerService): Card[][] {
+//   const playerCards: Card[][] = [
+//     dealer.deck.slice(0, 13),
+//     dealer.deck.slice(13, 26),
+//     dealer.deck.slice(26, 39),
+//     dealer.deck.slice(39, 52),
+//   ];
+//   return playerCards;
+// }
 
 const playerScores = [0, 0, 0, 0];
 

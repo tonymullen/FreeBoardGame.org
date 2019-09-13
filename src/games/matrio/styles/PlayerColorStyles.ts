@@ -23,6 +23,7 @@ export function turnMarkerStyle(player: number) {
     backgroundColor: colors[player],
     width: '50px',
     height: '50px',
-    margin: 'auto',
+    margin: '50px',
+    position: 'absolute' as 'absolute',
   };
 }
