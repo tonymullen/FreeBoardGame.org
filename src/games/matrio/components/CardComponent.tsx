@@ -5,6 +5,7 @@ import { ICardProps } from '../properties';
 export class CardComponent extends React.Component<ICardProps, {}> {
   onDragStart = (ev: any, card: Card) => {
     console.log(this.props.ctx.currentPlayer);
+    console.log(this.props.playerID);
     if (this.props.ctx.currentPlayer === String(this.props.playerID)) {
       this.props.setDraggingTrue();
       this.props.setSelectedCard(card);

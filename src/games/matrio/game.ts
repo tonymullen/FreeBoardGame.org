@@ -13,6 +13,7 @@ export interface IG {
   name_card: { [s: string]: Card };
   emptyTrays: { [suit: string]: number };
   playerScores: number[];
+  bustPlayers: number[];
   winnner: number;
 }
 
@@ -32,11 +33,13 @@ export const MatrioGame = Game({
       count: 0,
       emptyTrays: emptyTrays,
       playerScores: playerScores,
+      bustPlayers: [],
       winner: -1,
     };
   },
   moves: {
     placeCard(G: IG, ctx: IGameCtx, cardname: string, row: number, col: number, matrix: 'leftMatrix' | 'topMatrix') {
+      console.log('Placing card');
       const player = parseInt(ctx.playerID, 10);
       const card = name_card[cardname];
       card.flip = false;
@@ -78,13 +81,16 @@ export const MatrioGame = Game({
 
       const newDots = updateDots(G, ctx.currentPlayer, newLeftMatrix, newTopMatrix);
 
-      let bustPlayers: number[] = [];
-      if (G.count >= 24) {
-        bustPlayers = checkForBusts(newDots);
+      let newBustPlayers: number[] = [];
+      if (G.count >= 23) {
+        newBustPlayers = checkForBusts(newDots);
+        if (newBustPlayers.length > 0) {
+          ctx.events.endPhase();
+        }
       }
 
       let bustPlayerCards = [...G.playerCards];
-      bustPlayers.forEach(p => {
+      newBustPlayers.forEach(p => {
         bustPlayerCards[p] = [];
         playerScores[p] = -Infinity;
       });
@@ -96,6 +102,7 @@ export const MatrioGame = Game({
 
       let winner = checkForWinner(updatePlayerCards, newDots);
       console.log(winner);
+
       return {
         ...G,
         playerCards: updatePlayerCards,
@@ -104,6 +111,7 @@ export const MatrioGame = Game({
         dots: newDots,
         count: G.count + 1,
         emptyTrays: newEmptyTrays,
+        bustPlayers: newBustPlayers,
       };
     },
 
@@ -139,15 +147,33 @@ export const MatrioGame = Game({
             playerCards: hands,
           };
         },
-        next: 'play',
+        next: 'fillDots',
       },
-      play: {
+      fillDots: {
         turnOrder: {
           playOrder: () => [0, 1, 2, 3],
           first: G => getFirstPlayer(G),
           next: (_, ctx) => (ctx.playOrderPos + 1) % ctx.numPlayers,
           actionPlayers: {
             value: () => [0, 1, 2, 3],
+            all: true,
+            once: false,
+            others: false,
+          },
+        },
+        allowedMoves: ['placeCard'],
+        next: 'finishGame',
+      },
+      finishGame: {
+        onPhaseBegin: (G, ctx) => {
+          console.log('Beginning the end game');
+        },
+        turnOrder: {
+          playOrder: () => [0, 1, 2, 3],
+          first: (G, ctx) => getNextLivePlayer(G, ctx.playOrderPos),
+          next: (_, ctx) => (ctx.playOrderPos + 1) % ctx.numPlayers,
+          actionPlayers: {
+            value: G => getLivePlayers(G),
             all: true,
             once: false,
             others: false,
@@ -222,6 +248,22 @@ function checkForWinner(playerCards: Card[][], dots: Dot[][]) {
   console.log(playerCards);
   console.log(dots);
   return -1;
+}
+
+function getNextLivePlayer(G: IG, current: number): number {
+  let livePlayers = [0, 1, 2, 3].filter(n => !G.bustPlayers.includes(n));
+  let next = 0;
+  while (livePlayers[next] < current) {
+    next++;
+  }
+  console.log('Current players: ', livePlayers);
+  console.log('Next to play:', livePlayers[next]);
+  return livePlayers[next];
+}
+
+function getLivePlayers(G: IG): number[] {
+  console.log('Bust are ', G.bustPlayers);
+  return [0, 1, 2, 3].filter(n => !G.bustPlayers.includes(n));
 }
 
 function getFirstPlayer(G: IG): number {

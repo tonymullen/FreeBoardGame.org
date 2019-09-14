@@ -21,6 +21,7 @@ class Matrix extends React.Component<
     let trayContents = this.props.mat[col][row];
     let cardname = this.props.selectedCard.name;
     if (this._isDroppable(this.props.selectedCard, trayContents, this.props.G.count)) {
+      console.log('Dropable');
       this.props.moves.placeCard(cardname, row, col, this.props.left_or_top);
     }
     this.setState({
