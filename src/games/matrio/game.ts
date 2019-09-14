@@ -165,7 +165,7 @@ export const MatrioGame = Game({
         next: 'finishGame',
       },
       finishGame: {
-        onPhaseBegin: (G, ctx) => {
+        onPhaseBegin: () => {
           console.log('Beginning the end game');
         },
         turnOrder: {
